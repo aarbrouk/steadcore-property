@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const SITE = 'https://www.keystonepropertygroup.co.uk'; // replace with the real domain
+const SITE = 'https://www.steadcorepropertygroup.co.uk'; // replace with the real domain
 const BUSINESS_ID = SITE + '/#business';
 const today = new Date().toISOString().slice(0, 10);
 
@@ -41,7 +41,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 function header(depth) {
   const r = (p) => rel(depth, p);
   return `  <header class="site-header">
-    <a class="logo" href="${r('')}">Keystone <span>Property Group</span></a>
+    <a class="logo" href="${r('')}">Steadcore <span>Property Group</span></a>
     <nav aria-label="Main">
       <a href="${r('bathrooms/')}">Bathrooms</a>
       <a href="${r('kitchens/')}">Kitchens</a>
@@ -57,7 +57,7 @@ function header(depth) {
 
 function footer(depth) {
   return `  <footer>
-    <p>&copy; <span id="year"></span> Keystone Property Group. Property services across Bournemouth, Dorset, Hampshire and the south of England.</p>
+    <p>&copy; <span id="year"></span> Steadcore Property Group. Property services across Bournemouth, Dorset, Hampshire and the south of England.</p>
   </footer>
   <script src="${rel(depth, 'script.js')}"></script>`;
 }
@@ -111,8 +111,8 @@ function areaLinks(slugs, depth) {
 function placePage(p) {
   const depth = 2;
   const where = p.kind === 'town' ? `${p.name}${p.county ? ', ' + p.county : ''}` : p.name;
-  const title = `Plumber, Roofer & Home Improvements in ${p.name} | Keystone Property Group`;
-  const desc = `Keystone Property Group provides plumbing, leak detection, roofing, security, home cinema and home improvements in ${where}. Free quotes from a Bournemouth-based team.`;
+  const title = `Plumber, Roofer & Home Improvements in ${p.name} | Steadcore Property Group`;
+  const desc = `Steadcore Property Group provides plumbing, leak detection, roofing, security, home cinema and home improvements in ${where}. Free quotes from a Bournemouth-based team.`;
   const cards = services
     .map((s) => `        <li><h3><a href="${rel(depth, s.path + '/')}">${esc(s.label)} in ${esc(p.name)}</a></h3><p>Professional ${s.short} for homes and businesses in ${esc(p.name)}.</p></li>`)
     .join('\n');
@@ -156,7 +156,7 @@ ${townList}    <section class="sub reveal">
       {
         '@type': 'HomeAndConstructionBusiness',
         '@id': BUSINESS_ID,
-        name: 'Keystone Property Group',
+        name: 'Steadcore Property Group',
         url: SITE + '/',
         areaServed: { '@type': p.kind === 'county' ? 'AdministrativeArea' : 'City', name: p.name },
       },
@@ -196,7 +196,7 @@ function hubPage() {
       {
         '@type': 'HomeAndConstructionBusiness',
         '@id': BUSINESS_ID,
-        name: 'Keystone Property Group',
+        name: 'Steadcore Property Group',
         url: SITE + '/',
         areaServed: counties.map((c) => ({ '@type': 'AdministrativeArea', name: c.name })),
       },
@@ -204,8 +204,8 @@ function hubPage() {
     ],
   };
   return page({
-    title: 'Areas We Cover: Bournemouth, Dorset, Hampshire & Southern England | Keystone',
-    desc: 'Keystone Property Group serves Bournemouth, Dorset, Hampshire, Wiltshire, Somerset and West Sussex, covering a two-hour radius from Bournemouth.',
+    title: 'Areas We Cover: Bournemouth, Dorset, Hampshire & Southern England | Steadcore',
+    desc: 'Steadcore Property Group serves Bournemouth, Dorset, Hampshire, Wiltshire, Somerset and West Sussex, covering a two-hour radius from Bournemouth.',
     urlPath: '/areas/',
     depth,
     body,
