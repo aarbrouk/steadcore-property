@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const SITE = 'https://www.steadcorepropertygroup.co.uk'; // replace with the real domain
+const SITE = 'https://www.steadcorehomeimprovements.co.uk'; // replace with the real domain
 const BUSINESS_ID = SITE + '/#business';
 const today = new Date().toISOString().slice(0, 10);
 
@@ -10,7 +10,7 @@ const services = [
   { path: 'bathrooms', label: 'Bathroom installations', short: 'full bathroom installations including toilets, baths, basins, showers and tiling' },
   { path: 'kitchens', label: 'Kitchen installations', short: 'units, worktops, appliances and tiling' },
   { path: 'security', label: 'Alarm, sensor & CCTV installation', short: 'alarms, sensors and CCTV installation' },
-  { path: 'maintenance', label: 'Property maintenance', short: 'furniture, plumbing repairs, decorating and mastic repairs' },
+  { path: 'handyman', label: 'Handyman & home improvements', short: 'handyman repairs, decorating, carpentry, tiling, cleaning and garden maintenance' },
   { path: 'water', label: 'Plumbing & water leak detection', short: 'plumbing, water leak detection and damp surveys' },
   { path: 'roofing', label: 'Roofing repairs & replacements', short: 'roof repairs, replacements and maintenance' },
   { path: 'entertainment', label: 'Home cinema & entertainment systems', short: 'home cinema and multi-room entertainment systems' },
@@ -41,23 +41,22 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 function header(depth) {
   const r = (p) => rel(depth, p);
   return `  <header class="site-header">
-    <a class="logo" href="${r('')}">Steadcore <span>Property Group</span></a>
+    <a class="logo" href="${r('')}"><img src="${r('logo.PNG')}" alt="Steadcore Home Improvements" width="180" height="120"></a>
     <nav aria-label="Main">
+      <a href="${r('handyman/')}">Handymen</a>
       <a href="${r('bathrooms/')}">Bathrooms</a>
       <a href="${r('kitchens/')}">Kitchens</a>
       <a href="${r('security/')}">Security</a>
-      <a href="${r('maintenance/')}">Maintenance</a>
       <a href="${r('water/')}">Water</a>
       <a href="${r('roofing/')}">Roofing</a>
       <a href="${r('entertainment/')}">Entertainment</a>
-      <a class="btn btn-small" href="${r('#contact')}">Get a quote</a>
     </nav>
   </header>`;
 }
 
 function footer(depth) {
   return `  <footer>
-    <p>&copy; <span id="year"></span> Steadcore Property Group. Property services across Bournemouth, Dorset, Hampshire and the south of England.</p>
+    <p>&copy; <span id="year"></span> Steadcore Home Improvements. Property services across Bournemouth, Dorset, Hampshire and the south of England.</p>
   </footer>
   <script src="${rel(depth, 'script.js')}"></script>`;
 }
@@ -111,8 +110,8 @@ function areaLinks(slugs, depth) {
 function placePage(p) {
   const depth = 2;
   const where = p.kind === 'town' ? `${p.name}${p.county ? ', ' + p.county : ''}` : p.name;
-  const title = `Plumber, Roofer & Home Improvements in ${p.name} | Steadcore Property Group`;
-  const desc = `Steadcore Property Group provides plumbing, leak detection, roofing, security, home cinema and home improvements in ${where}. Free quotes from a Bournemouth-based team.`;
+  const title = `Plumber, Roofer & Home Improvements in ${p.name} | Steadcore Home Improvements`;
+  const desc = `Steadcore Home Improvements provides plumbing, leak detection, roofing, security, home cinema and home improvements in ${where}. Free quotes from a Bournemouth-based team.`;
   const cards = services
     .map((s) => `        <li><h3><a href="${rel(depth, s.path + '/')}">${esc(s.label)} in ${esc(p.name)}</a></h3><p>Professional ${s.short} for homes and businesses in ${esc(p.name)}.</p></li>`)
     .join('\n');
@@ -124,6 +123,7 @@ function placePage(p) {
 `
     : '';
   const body = `    <section class="page-hero theme-water">
+      <a class="btn btn-small hero-quote" href="${rel(depth, '#contact')}">Get a quote</a>
       <p class="crumbs"><a href="${rel(depth, '')}">Home</a> / <a href="${rel(depth, 'areas/')}">Areas</a> / ${esc(p.name)}</p>
       <h1>Property services in ${esc(p.name)}</h1>
       <p class="lead">${esc(p.intro)}</p>
@@ -133,7 +133,7 @@ function placePage(p) {
     <section class="sub reveal">
       <div>
         <h2>What we do in ${esc(p.name)}</h2>
-        <p>One local team for water, bathrooms, kitchens, security, home entertainment, roofing and property maintenance. Pick a service to see what we offer.</p>
+        <p>One local team for water, bathrooms, kitchens, security, home entertainment, roofing and handyman services. Pick a service to see what we offer.</p>
       </div>
       <ul class="points">
 ${cards.replace(/<li><h3>/g, '<li><strong>').replace(/<\/h3><p>/g, '</strong><span>').replace(/<\/p><\/li>/g, '</span></li>')}
@@ -156,7 +156,7 @@ ${townList}    <section class="sub reveal">
       {
         '@type': 'HomeAndConstructionBusiness',
         '@id': BUSINESS_ID,
-        name: 'Steadcore Property Group',
+        name: 'Steadcore Home Improvements',
         url: SITE + '/',
         areaServed: { '@type': p.kind === 'county' ? 'AdministrativeArea' : 'City', name: p.name },
       },
@@ -171,6 +171,7 @@ function hubPage() {
   const counties = places.filter((p) => p.kind === 'county');
   const towns = places.filter((p) => p.kind === 'town');
   const body = `    <section class="page-hero theme-water">
+      <a class="btn btn-small hero-quote" href="../#contact">Get a quote</a>
       <p class="crumbs"><a href="../">Home</a> / Areas</p>
       <h1>Areas we cover across the south of England</h1>
       <p class="lead">Based in Bournemouth, we provide water, bathrooms, security, home entertainment, roofing and home improvement services within around two hours of Bournemouth.</p>
@@ -196,7 +197,7 @@ function hubPage() {
       {
         '@type': 'HomeAndConstructionBusiness',
         '@id': BUSINESS_ID,
-        name: 'Steadcore Property Group',
+        name: 'Steadcore Home Improvements',
         url: SITE + '/',
         areaServed: counties.map((c) => ({ '@type': 'AdministrativeArea', name: c.name })),
       },
@@ -204,8 +205,8 @@ function hubPage() {
     ],
   };
   return page({
-    title: 'Areas We Cover: Bournemouth, Dorset, Hampshire & Southern England | Steadcore',
-    desc: 'Steadcore Property Group serves Bournemouth, Dorset, Hampshire, Wiltshire, Somerset and West Sussex, covering a two-hour radius from Bournemouth.',
+    title: 'Areas We Cover: Bournemouth, Dorset, Hampshire & Southern England | Steadcore Home Improvements',
+    desc: 'Steadcore Home Improvements serves Bournemouth, Dorset, Hampshire, Wiltshire, Somerset and West Sussex, covering a two-hour radius from Bournemouth.',
     urlPath: '/areas/',
     depth,
     body,
