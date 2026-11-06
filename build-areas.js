@@ -110,7 +110,7 @@ function areaLinks(slugs, depth) {
 function placePage(p) {
   const depth = 2;
   const where = p.kind === 'town' ? `${p.name}${p.county ? ', ' + p.county : ''}` : p.name;
-  const title = `Plumber, Roofer & Home Improvements in ${p.name} | Steadcore Home Improvements`;
+  const title = `Home Improvements, Renovations & General Repairs in ${p.name} | Steadcore`;
   const desc = `Steadcore Home Improvements provides plumbing, leak detection, roofing, security, home cinema and home improvements in ${where}. Free quotes from a Bournemouth-based team.`;
   const cards = services
     .map((s) => `        <li><h3><a href="${rel(depth, s.path + '/')}">${esc(s.label)} in ${esc(p.name)}</a></h3><p>Professional ${s.short} for homes and businesses in ${esc(p.name)}.</p></li>`)
@@ -205,7 +205,7 @@ function hubPage() {
     ],
   };
   return page({
-    title: 'Areas We Cover: Bournemouth, Dorset, Hampshire & Southern England | Steadcore Home Improvements',
+    title: 'Home Improvements, Renovations & General Repairs: Areas We Cover | Steadcore',
     desc: 'Steadcore Home Improvements serves Bournemouth, Dorset, Hampshire, Wiltshire, Somerset and West Sussex, covering a two-hour radius from Bournemouth.',
     urlPath: '/areas/',
     depth,
